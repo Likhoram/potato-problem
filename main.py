@@ -14,7 +14,35 @@ class Plant:
 #       Add your new classes here!       #
 # (Make sure not to accidentally indent) #
 ##########################################
+class Potato(Plant):
+    def __init__(self, energy):
+        super().__init__(energy)
+        self.tubers = []
 
+    def sprout_tuber(self):
+        if self.energy >= 30:
+            self.tubers.append(Tuber())
+            self.energy -= 30
+
+    def absorb_sunlight(self, sunlight_energy):
+        print(self.energy)
+        print(sunlight_energy)
+        if len(self.tubers) > 0:
+            self.energy += sunlight_energy // 2
+            ave_energy = (sunlight_energy // 2) // len(self.tubers)
+
+            print(self.energy)
+            print(ave_energy)
+
+            for tuber in self.tubers:
+                tuber.energy += ave_energy
+        else:
+            self.energy += sunlight_energy
+
+
+class Tuber:
+    def __init__(self, energy=30):
+        self.energy = energy
 
 ########## WAVE 1 ##########
 # Checking the behavior for creating an instance of Potato
@@ -61,7 +89,7 @@ assert my_potato.tubers[0].energy == 55
 assert my_potato.tubers[1].energy == 55
 
 # Checking the behavior for absorbing sunlight for a 
-# potato with one tuber
+# potato with no tuber
 new_potato = Potato(30)
 new_potato.absorb_sunlight(40)
 assert new_potato.energy == 70
